@@ -34,7 +34,9 @@ func main() {
 	writer = encoder
 
 	// Wrap writer by gzip
-	writer = gzip.NewWriter(writer)
+	compressor := gzip.NewWriter(writer)
+	defer compressor.Close()
+	writer = compressor
 
 	io.Copy(writer, f)
 }
